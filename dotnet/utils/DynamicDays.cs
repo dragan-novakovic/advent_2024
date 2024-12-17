@@ -6,8 +6,10 @@ namespace Advent.Utils
 {
     public class DynamicDays
     {
-        public static void GetDynamicTypes()
+        public static List<Type> GetDynamicTypes()
         {
+            var types = new List<Type>();
+
             for (int i = 1; i <= 3; i++)
             {
                 // Create a dynamic assembly and module
@@ -21,8 +23,11 @@ namespace Advent.Utils
 
                 // Create the type
                 Type dynamicType = typeBuilder.CreateType();
+                types.Add(dynamicType);
                 Console.WriteLine($"Created type: {dynamicType.Name}");
             }
+
+            return types;
         }
     }
 }
