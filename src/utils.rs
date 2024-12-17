@@ -1,9 +1,13 @@
-// input get
+trait TaskInput {
+    async fn get_task_input() -> Result<Self, Box<dyn std::error::Error>>
+    where
+        Self: Sized;
+}
 
-// https://adventofcode.com/2024/day/1/input
+pub async fn get_task_input<T: serde::de::DeserializeOwned>(
+    input_url: &str,
+) -> Result<T, reqwest::Error> {
+    let resp = reqwest::get(input_url).await?.json::<T>().await?;
 
-pub fn get_input() -> String {
-    let mut input = String::new();
-    std::io::stdin().read_line(&mut input).unwrap();
-    input.trim().to_string()
+    Ok(resp)
 }
