@@ -18,8 +18,10 @@ trait TaskInput {
 
 pub async fn get_task_input<T: serde::de::DeserializeOwned>(
     input_url: &str,
-) -> Result<T, reqwest::Error> {
-    let resp = reqwest::get(input_url).await?.json::<T>().await?;
+) -> Result<(), reqwest::Error> {
+    let response = reqwest::get(input_url).await?;
+    let data = response.text().await?;
+    dbg!(data);
 
-    Ok(resp)
+    Ok(())
 }
