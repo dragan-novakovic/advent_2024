@@ -48,32 +48,46 @@ pub async fn task_one() -> Result<i32, i32> {
     let mut left_iter = left_list.iter();
     let mut right_iter = right_list.iter();
 
-    loop {
-        let left = left_iter.next();
-        let right = right_iter.next();
+    // loop {
+    //     let left = left_iter.next();
+    //     let right = right_iter.next();
 
-        match (left, right) {
-            (Some(left), Some(right)) => {
-                if left < right {
-                    max_distance.push(right - left);
-                } else {
-                    max_distance.push(left - right);
-                }
-            }
-            (Some(left), None) => {
-                println!("Left: {}", left);
-            }
-            (None, Some(right)) => {
-                println!("Right: {}", right);
-            }
-            (None, None) => {
-                break;
+    //     match (left, right) {
+    //         (Some(left), Some(right)) => {
+    //             if left < right {
+    //                 max_distance.push(right - left);
+    //             } else {
+    //                 max_distance.push(left - right);
+    //             }
+    //         }
+    //         (Some(left), None) => {
+    //             println!("Left: {}", left);
+    //         }
+    //         (None, Some(right)) => {
+    //             println!("Right: {}", right);
+    //         }
+    //         (None, None) => {
+    //             break;
+    //         }
+    //     }
+    // }
+
+    // horrible perf, optimize later
+    let sim_score = left_iter.fold(0, |mut acc, x| {
+        dbg!(acc);
+        for i in 0..right_list.len() - 1 {
+            dbg!(acc);
+            if x.clone() == right_list[i] {
+                acc = acc + x;
             }
         }
-    }
+        acc
+    });
 
-    let max = max_distance.iter().sum::<i32>();
+    dbg!(sim_score);
 
-    dbg!(max);
+    // let max = max_distance.iter().sum::<i32>();
+
+    // dbg!(max);
     Ok(3)
 }
