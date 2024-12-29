@@ -12,7 +12,7 @@ add the difference.
 
  */
 
-pub fn load_txt_file_data() -> Result<(Vec<i32>, Vec<i32>), Box<dyn std::error::Error>> {
+fn load_txt_file_data() -> Result<(Vec<i32>, Vec<i32>), Box<dyn std::error::Error>> {
     let path = Path::new("src/day1/input.txt");
     let file = File::open(path)?;
     let reader = io::BufReader::new(file);

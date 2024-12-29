@@ -1,6 +1,7 @@
-use day1::task1::task_one;
+use day1::task::task_one;
 
 mod day1;
+mod day2;
 mod utils;
 
 #[tokio::main]
