@@ -32,34 +32,41 @@ pub fn task_two() {
         .filter(|report| is_report_safe(report))
         .collect::<Vec<&Vec<i32>>>()
         .len() as i32;
+
+    dbg!(safe_reports);
 }
 
 fn is_report_safe(report: &Vec<i32>) -> bool {
     // start with 3 elements
     // compare and slide
+    let len = report.len();
     let mut is_increasing = false;
     let mut is_decreasing = false;
     let mut is_diff_more_then_two = false;
-    let mut starters = report.iter().take(3).collect::<Vec<&i32>>();
+    let list = report.iter().collect::<Vec<&i32>>();
 
-    if starters.len() == 3 {
-        let mut iter = starters.iter();
-        let mut prev = iter.next().unwrap().clone();
-        let mut next = iter.next().unwrap().clone();
-        let mut next_next = iter.next().unwrap().clone();
+    if list.len() >= 3 {
+        for i in 0..(len - 3) {
+            let prev = list[i];
+            let next = list[i + 1];
+            let next_next = list[i + 2];
 
-        if prev < next && next < next_next {
-            is_increasing = true;
-        } else if prev > next && next > next_next {
-            is_decreasing = true;
-        }
+            if prev < next && next < next_next {
+                is_increasing = true;
+            } else if prev > next && next > next_next {
+                is_decreasing = true;
+            }
 
-        if (prev - next).abs() >= 1 && (prev - next).abs() <= 3 {
-            is_diff_more_then_two = true;
+            if (prev - next).abs() <= 2 && (next - next_next).abs() <= 2 {
+                is_diff_more_then_two = true;
+            }
         }
     }
 
-    (is_decreasing || is_increasing) && is_diff_more_then_two
+    let is_safe = (is_decreasing || is_increasing) && is_diff_more_then_two;
+    dbg!(is_safe); // for debugging
+
+    is_safe
 }
 
 fn load_txt_file_data() -> Result<Vec<Vec<i32>>, Box<dyn std::error::Error>> {
