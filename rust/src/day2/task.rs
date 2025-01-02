@@ -44,14 +44,18 @@ fn is_report_safe(report: &Vec<i32>) -> bool {
 
     if starters.len() == 3 {
         let mut iter = starters.iter();
-        let mut prev = iter.next().unwrap();
-        let mut next = iter.next().unwrap();
-        let mut next_next = iter.next().unwrap();
+        let mut prev = iter.next().unwrap().clone();
+        let mut next = iter.next().unwrap().clone();
+        let mut next_next = iter.next().unwrap().clone();
 
         if prev < next && next < next_next {
             is_increasing = true;
         } else if prev > next && next > next_next {
             is_decreasing = true;
+        }
+
+        if (prev - next).abs() >= 1 && (prev - next).abs() <= 3 {
+            is_diff_more_then_two = true;
         }
     }
 
