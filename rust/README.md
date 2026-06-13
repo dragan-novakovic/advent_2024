@@ -1,1 +1,1 @@
-# advent_2024
+# advent
